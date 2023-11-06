@@ -1,4 +1,4 @@
-package com.example.springboot2essentials;
+package study.devdojo.springboot2essentials;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
