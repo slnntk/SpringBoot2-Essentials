@@ -1,11 +1,11 @@
-package study.devdojo.springboot2essentials.start;
+package study.devdojo.springboot2essentials;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.ComponentScan;
 
 @EnableAutoConfiguration
-@ComponentScan(basePackages = "study.devdojo.springboot2essentials")
+@ComponentScan()
 //@SpringBootApplication
 public class ApplicationStart {
 
