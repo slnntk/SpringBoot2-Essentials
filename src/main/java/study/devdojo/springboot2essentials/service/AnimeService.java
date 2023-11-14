@@ -7,14 +7,20 @@ import org.springframework.web.server.ResponseStatusException;
 import study.devdojo.springboot2essentials.domain.Anime;
 import study.devdojo.springboot2essentials.repository.AnimeRepository;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ThreadLocalRandom;
 
 @Service
 // @RequiredArgsConstructor
 public class AnimeService{
 
-    private List<Anime> animes = List.of(new Anime(1L, "Hunter x Hunter"), new Anime(2L, "Beserk "));
+    private static List<Anime> animes;
     // private final AnimeRepository animeRepository;
+
+    static {
+        animes =  new ArrayList<>(List.of(new Anime(1L, "Hunter x Hunter"), new Anime(2L, "Beserk ")));
+    }
 
     public List<Anime> listAll() {
         return animes;
@@ -25,6 +31,12 @@ public class AnimeService{
                 .filter(anime -> anime.getId() == id)
                 .findFirst()
                 .orElseThrow(()-> new ResponseStatusException(HttpStatus.BAD_REQUEST, "Anime not found"));
+    }
+
+    public Anime save(Anime anime){
+        anime.setId(ThreadLocalRandom.current().nextLong(3, 100000));
+        animes.add(anime);
+        return anime;
     }
 
 }
