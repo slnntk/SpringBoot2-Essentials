@@ -1,5 +1,9 @@
 package study.devdojo.springboot2essentials.service;
 
+
+// norma : rfc7231
+
+
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -37,6 +41,16 @@ public class AnimeService{
         anime.setId(ThreadLocalRandom.current().nextLong(3, 100000));
         animes.add(anime);
         return anime;
+    }
+
+    public void delete(Long id) {
+        System.out.println("delete");
+        animes.remove(findById(id));
+    }
+
+    public void replace(Anime anime){
+        delete(anime.getId());
+        animes.add(anime);
     }
 
 }
