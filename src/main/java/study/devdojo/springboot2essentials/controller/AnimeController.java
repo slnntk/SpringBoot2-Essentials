@@ -1,17 +1,16 @@
 package study.devdojo.springboot2essentials.controller;
 
-import com.fasterxml.jackson.core.JsonParser;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.log4j.Log4j;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import study.devdojo.springboot2essentials.domain.Anime;
+import study.devdojo.springboot2essentials.requests.AnimePostRequestBody;
+import study.devdojo.springboot2essentials.requests.AnimePutRequestBody;
 import study.devdojo.springboot2essentials.service.AnimeService;
 import study.devdojo.springboot2essentials.util.DateUtil;
+import study.devdojo.springboot2essentials.util.LoggerUtil;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -32,35 +31,30 @@ public class AnimeController {
     //@RequestMapping(method = RequestMethod.GET, params = "list")  -> Tá deprecidado, o ideal é @GetMapping.
     @GetMapping // Não possui path, pois é o findAll
     public ResponseEntity<List<Anime>> list() {
-        log.info(dateUtil.formatLocalDateTimeToDatabaseStyle(LocalDateTime.now()) + "  " + getClass().getSimpleName());
-        return ResponseEntity.ok(animeService.listAll());
+        return ResponseEntity.ok(animeService.findAll());
     }
 
     @GetMapping(path = "/{id}")
     public ResponseEntity<Anime> findById(@PathVariable long id) {
-        log.info(dateUtil.formatLocalDateTimeToDatabaseStyle(LocalDateTime.now()) + "  " + getClass().getSimpleName());
-        return ResponseEntity.ok(animeService.findById(id));
+        return ResponseEntity.ok(animeService.findByIdOrThrowBadRequestException(id));
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<Anime> save(@RequestBody Anime anime) {
-        log.info(dateUtil.formatLocalDateTimeToDatabaseStyle(LocalDateTime.now()) + "  " + getClass().getSimpleName());
-        return new ResponseEntity<>(animeService.save(anime), HttpStatus.CREATED);
+    public ResponseEntity<Anime> save(@RequestBody AnimePostRequestBody animePostRequestBody) {
+        return new ResponseEntity<>(animeService.save(animePostRequestBody), HttpStatus.CREATED);
     }
 
     @DeleteMapping(path = "/{id}")
     public ResponseEntity<Void> delete(@PathVariable long id) {
-        log.info(dateUtil.formatLocalDateTimeToDatabaseStyle(LocalDateTime.now()) + "  " + getClass().getSimpleName());
         animeService.delete(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
     @PutMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<Void> replace(@RequestBody Anime anime) {
-        log.info(dateUtil.formatLocalDateTimeToDatabaseStyle(LocalDateTime.now()) + "  " + getClass().getSimpleName());
-        animeService.replace(anime);
+    public ResponseEntity<Void> replace(@RequestBody AnimePutRequestBody animePutRequestBody) {
+        animeService.replace(animePutRequestBody);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
