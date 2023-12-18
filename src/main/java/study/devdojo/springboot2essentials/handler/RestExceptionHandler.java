@@ -5,7 +5,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import study.devdojo.springboot2essentials.exception.BadRequestException;
-import study.devdojo.springboot2essentials.exception.BadRequestExceptionDetails;
+import study.devdojo.springboot2essentials.exception.ObjectNotFoundException;
+import study.devdojo.springboot2essentials.exception.StandardError;
 
 import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
@@ -23,13 +24,26 @@ public class RestExceptionHandler {
      * @return ResponseEntity contendo os detalhes da exceção e o código de status HTTP BAD_REQUEST.
      */
     @ExceptionHandler(BadRequestException.class)
-    public ResponseEntity<BadRequestExceptionDetails> handlerBadRequestException(BadRequestException badRequestException) {
-        return new ResponseEntity<BadRequestExceptionDetails>(
-                BadRequestExceptionDetails.builder()
+    public ResponseEntity<StandardError> handlerBadRequestException(BadRequestException badRequestException) {
+        return new ResponseEntity<StandardError>(
+                StandardError.builder()
                         .title("Bad Request Exception, Check the Documentation")
                         .status(HttpStatus.BAD_REQUEST.value())
                         .details(badRequestException.getMessage())
                         .developerMessage(badRequestException.getClass().getName())
+                        .timestamp(LocalDateTime.now())
+                        .build(), HttpStatus.BAD_REQUEST
+        );
+    }
+
+    @ExceptionHandler(ObjectNotFoundException.class)
+    public ResponseEntity<StandardError> ObjectNotFoundException(ObjectNotFoundException objectNotFoundException) {
+        return new ResponseEntity<StandardError>(
+                StandardError.builder()
+                        .title("Object Not Found Exception, Check the Request")
+                        .status(HttpStatus.NOT_FOUND.value())
+                        .details(objectNotFoundException.getMessage())
+                        .developerMessage(objectNotFoundException.getClass().getName())
                         .timestamp(LocalDateTime.now())
                         .build(), HttpStatus.BAD_REQUEST
         );

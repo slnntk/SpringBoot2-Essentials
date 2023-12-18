@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 import study.devdojo.springboot2essentials.domain.Anime;
 import study.devdojo.springboot2essentials.exception.BadRequestException;
+import study.devdojo.springboot2essentials.exception.ObjectNotFoundException;
 import study.devdojo.springboot2essentials.mapper.AnimeMapper;
 import study.devdojo.springboot2essentials.repository.AnimeRepository;
 import study.devdojo.springboot2essentials.requests.AnimePostRequestBody;
@@ -33,7 +34,7 @@ public class AnimeService {
 
     public Anime findByIdOrThrowBadRequestException(long id) {
         return animeRepository.findById(id)
-                .orElseThrow(() -> new BadRequestException("Anime not Found"));
+                .orElseThrow(() -> new ObjectNotFoundException("Anime not Found"));
     }
 
     public Anime save(AnimePostRequestBody animePostRequestBody) {

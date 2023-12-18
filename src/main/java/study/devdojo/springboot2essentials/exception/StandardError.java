@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
  */
 @Data
 @Builder
-public class BadRequestExceptionDetails {
+public class StandardError {
     private String title; // Título ou descrição resumida da exceção.
     private int status; // Código de status HTTP associado à exceção.
     private String details; // Detalhes ou informações adicionais sobre a exceção.
