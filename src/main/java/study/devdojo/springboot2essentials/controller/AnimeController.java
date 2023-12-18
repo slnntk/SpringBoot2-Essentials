@@ -10,49 +10,67 @@ import study.devdojo.springboot2essentials.requests.AnimePostRequestBody;
 import study.devdojo.springboot2essentials.requests.AnimePutRequestBody;
 import study.devdojo.springboot2essentials.service.AnimeService;
 import study.devdojo.springboot2essentials.util.DateUtil;
-import study.devdojo.springboot2essentials.util.LoggerUtil;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
+/**
+ * Controlador REST responsável por gerenciar requisições relacionadas aos Animes.
+ */
 @RestController
-@RequestMapping("animes") // Sempre declarado no plural.
+@RequestMapping("animes") // Rota base para endpoints relacionados aos Animes.
 @Log4j2
-// @AllArgsConstructor
-// @RequiredArgsConstructor cria um construtor com todos os argumentos finals.
-@RequiredArgsConstructor
+@RequiredArgsConstructor // Gera um construtor com todos os argumentos finals.
 public class AnimeController {
 
-    //@Autowired -> Não precisa do autowired afinal, ele é injetado pelo construtor
-    private final DateUtil dateUtil;
-    private final AnimeService animeService;
+    private final DateUtil dateUtil; // Utilitário para obtenção de data/hora.
+    private final AnimeService animeService; // Serviço responsável pela lógica de negócio dos Animes.
 
-    //localhost:8080/anime/list
-    //@RequestMapping(method = RequestMethod.GET, params = "list")  -> Tá deprecidado, o ideal é @GetMapping.
-    @GetMapping // Não possui path, pois é o findAll
+    /**
+     * Endpoint para listar todos os Animes.
+     * @return ResponseEntity contendo a lista de Animes e o código de status HTTP OK.
+     */
+    @GetMapping
     public ResponseEntity<List<Anime>> list() {
-        return ResponseEntity.ok(animeService.findAll());
+        return ResponseEntity.ok(animeService.listAll());
     }
 
+    /**
+     * Endpoint para buscar um Anime pelo ID.
+     * @param id ID do Anime a ser buscado.
+     * @return ResponseEntity contendo o Anime encontrado e o código de status HTTP OK.
+     */
     @GetMapping(path = "/{id}")
     public ResponseEntity<Anime> findById(@PathVariable long id) {
         return ResponseEntity.ok(animeService.findByIdOrThrowBadRequestException(id));
     }
 
+    /**
+     * Endpoint para criar um novo Anime.
+     * @param animePostRequestBody Corpo da requisição com os dados do Anime a ser criado.
+     * @return ResponseEntity contendo o Anime criado e o código de status HTTP CREATED.
+     */
     @PostMapping
-    @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<Anime> save(@RequestBody AnimePostRequestBody animePostRequestBody) {
         return new ResponseEntity<>(animeService.save(animePostRequestBody), HttpStatus.CREATED);
     }
 
+    /**
+     * Endpoint para deletar um Anime pelo ID.
+     * @param id ID do Anime a ser deletado.
+     * @return ResponseEntity com código de status HTTP NO_CONTENT (sem conteúdo).
+     */
     @DeleteMapping(path = "/{id}")
     public ResponseEntity<Void> delete(@PathVariable long id) {
         animeService.delete(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 
+    /**
+     * Endpoint para atualizar um Anime.
+     * @param animePutRequestBody Corpo da requisição com os dados atualizados do Anime.
+     * @return ResponseEntity com código de status HTTP NO_CONTENT (sem conteúdo).
+     */
     @PutMapping
-    @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<Void> replace(@RequestBody AnimePutRequestBody animePutRequestBody) {
         animeService.replace(animePutRequestBody);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);

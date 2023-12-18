@@ -1,4 +1,5 @@
 version: '3.1'
+
 services:
   db:
     image: mysql
@@ -13,6 +14,12 @@ services:
 volumes:
   data:
 
+# Este arquivo docker-compose.yml define serviços para execução de um banco de dados MySQL.
+# O serviço 'db' utiliza a imagem 'mysql', cria um contêiner com o nome 'essentials_mysql'.
+# Define a variável de ambiente 'MYSQL_ROOT_PASSWORD' como 'root' para a senha do root do MySQL.
+# Mapeia a porta '3306' do contêiner para a mesma porta no host.
+# Define um volume chamado 'data' para persistir os dados do MySQL em '/var/lib/mysql'.
 
-# docker ps -> lista os conteiners que estão sendo rodados no momento
-# docker-compose down -> derrubar o conteiner.
+# Comandos úteis:
+# docker ps -> lista os contêineres em execução no momento.
+# docker-compose down -> desliga e remove os contêineres definidos neste arquivo docker-compose.yml.
