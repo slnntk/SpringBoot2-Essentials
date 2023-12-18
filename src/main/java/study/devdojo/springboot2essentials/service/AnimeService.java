@@ -5,11 +5,9 @@ package study.devdojo.springboot2essentials.service;
 
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
-import org.springframework.web.server.ResponseStatusException;
+import org.springframework.transaction.annotation.Transactional;
 import study.devdojo.springboot2essentials.domain.Anime;
-import study.devdojo.springboot2essentials.exception.BadRequestException;
 import study.devdojo.springboot2essentials.exception.ObjectNotFoundException;
 import study.devdojo.springboot2essentials.mapper.AnimeMapper;
 import study.devdojo.springboot2essentials.repository.AnimeRepository;
@@ -37,8 +35,21 @@ public class AnimeService {
                 .orElseThrow(() -> new ObjectNotFoundException("Anime not Found"));
     }
 
+    /**
+     * Método para salvar um novo Anime no banco de dados.
+     * Caso ocorra alguma exceção durante a execução do método, a transação será revertida (rollback),
+     * desfazendo as operações realizadas até o momento. Isso mantém a consistência dos dados no banco.
+     *
+     * @param animePostRequestBody Corpo da requisição com os dados do Anime a ser criado.
+     * @return Anime recém-criado e persistido no banco de dados.
+     */
+    @Transactional
     public Anime save(AnimePostRequestBody animePostRequestBody) {
-        return animeRepository.save(AnimeMapper.INSTANCE.toAnime(animePostRequestBody));
+        // Mapeia os dados do corpo da requisição (AnimePostRequestBody) para um objeto do tipo Anime.
+        Anime anime = AnimeMapper.INSTANCE.toAnime(animePostRequestBody);
+
+        // Salva o Anime no banco de dados utilizando o AnimeRepository.
+        return animeRepository.save(anime);
     }
 
     public void delete(long id) {

@@ -8,7 +8,6 @@ import study.devdojo.springboot2essentials.exception.BadRequestException;
 import study.devdojo.springboot2essentials.exception.ObjectNotFoundException;
 import study.devdojo.springboot2essentials.exception.StandardError;
 
-import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
 
 /**
@@ -36,6 +35,11 @@ public class RestExceptionHandler {
         );
     }
 
+    /**
+     * Método para lidar com a exceção ObjectNotFoundException.
+     * @param objectNotFoundException Exceção ObjectNotFoundException lançada na aplicação.
+     * @return ResponseEntity contendo os detalhes da exceção e o código de status HTTP NOT_FOUND.
+     */
     @ExceptionHandler(ObjectNotFoundException.class)
     public ResponseEntity<StandardError> ObjectNotFoundException(ObjectNotFoundException objectNotFoundException) {
         return new ResponseEntity<StandardError>(
@@ -45,7 +49,7 @@ public class RestExceptionHandler {
                         .details(objectNotFoundException.getMessage())
                         .developerMessage(objectNotFoundException.getClass().getName())
                         .timestamp(LocalDateTime.now())
-                        .build(), HttpStatus.BAD_REQUEST
+                        .build(), HttpStatus.NOT_FOUND
         );
     }
 }
