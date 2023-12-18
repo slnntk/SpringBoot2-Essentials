@@ -27,7 +27,9 @@ public class AnimeController {
 
     /**
      * Endpoint para listar todos os Animes.
+     *
      * @return ResponseEntity contendo a lista de Animes e o código de status HTTP OK.
+     * (200 - OK)
      */
     @GetMapping
     public ResponseEntity<List<Anime>> list() {
@@ -36,8 +38,10 @@ public class AnimeController {
 
     /**
      * Endpoint para buscar um Anime pelo ID.
+     *
      * @param id ID do Anime a ser buscado.
      * @return ResponseEntity contendo o Anime encontrado e o código de status HTTP OK.
+     * (200 - OK)
      */
     @GetMapping(path = "/{id}")
     public ResponseEntity<Anime> findById(@PathVariable long id) {
@@ -45,9 +49,23 @@ public class AnimeController {
     }
 
     /**
+     * Endpoint para buscar Animes pelo nome.
+     *
+     * @param name Nome do Anime a ser buscado.
+     * @return ResponseEntity contendo a lista de Animes encontrados e o código de status HTTP OK.
+     * (200 - OK)
+     */
+    @GetMapping(path = "/find")
+    public ResponseEntity<List<Anime>> findByName(@RequestParam(required = true) String name) {
+        return ResponseEntity.ok(animeService.findByName(name));
+    }
+
+    /**
      * Endpoint para criar um novo Anime.
+     *
      * @param animePostRequestBody Corpo da requisição com os dados do Anime a ser criado.
      * @return ResponseEntity contendo o Anime criado e o código de status HTTP CREATED.
+     * (201 - CREATED)
      */
     @PostMapping
     public ResponseEntity<Anime> save(@RequestBody AnimePostRequestBody animePostRequestBody) {
@@ -56,8 +74,10 @@ public class AnimeController {
 
     /**
      * Endpoint para deletar um Anime pelo ID.
+     *
      * @param id ID do Anime a ser deletado.
      * @return ResponseEntity com código de status HTTP NO_CONTENT (sem conteúdo).
+     * (204 - NO_CONTENT)
      */
     @DeleteMapping(path = "/{id}")
     public ResponseEntity<Void> delete(@PathVariable long id) {
@@ -67,8 +87,10 @@ public class AnimeController {
 
     /**
      * Endpoint para atualizar um Anime.
+     *
      * @param animePutRequestBody Corpo da requisição com os dados atualizados do Anime.
      * @return ResponseEntity com código de status HTTP NO_CONTENT (sem conteúdo).
+     * (204 - NO_CONTENT)
      */
     @PutMapping
     public ResponseEntity<Void> replace(@RequestBody AnimePutRequestBody animePutRequestBody) {

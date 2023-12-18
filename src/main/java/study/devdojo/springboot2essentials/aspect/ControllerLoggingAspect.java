@@ -18,6 +18,7 @@ public class ControllerLoggingAspect {
     /**
      * Método executado antes de métodos no AnimeController.
      * Realiza logging das informações sobre o método, classe e thread.
+     *
      * @param joinPoint Ponto de junção da execução do método.
      */
     @Before("execution(* study.devdojo.springboot2essentials.controller.AnimeController.*(..))")
