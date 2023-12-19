@@ -11,6 +11,7 @@ import study.devdojo.springboot2essentials.requests.AnimePutRequestBody;
 import study.devdojo.springboot2essentials.service.AnimeService;
 import study.devdojo.springboot2essentials.util.DateUtil;
 
+import javax.validation.Valid;
 import java.util.List;
 
 /**
@@ -64,13 +65,16 @@ public class AnimeController {
      * Endpoint para criar um novo Anime.
      *
      * @param animePostRequestBody Corpo da requisição com os dados do Anime a ser criado.
-     * @return ResponseEntity contendo o Anime criado e o código de status HTTP CREATED.
-     * (201 - CREATED)
+     *                             O parâmetro é validado usando a anotação @Valid, que ativa a validação
+     *                             das constraints definidas na classe AnimePostRequestBody, como por exemplo
+     *                             a validação de campos obrigatórios, tamanho, formato, entre outros.
+     * @return ResponseEntity contendo o Anime criado e o código de status HTTP CREATED (201 - CREATED).
      */
     @PostMapping
-    public ResponseEntity<Anime> save(@RequestBody AnimePostRequestBody animePostRequestBody) {
+    public ResponseEntity<Anime> save(@RequestBody @Valid AnimePostRequestBody animePostRequestBody) {
         return new ResponseEntity<>(animeService.save(animePostRequestBody), HttpStatus.CREATED);
     }
+
 
     /**
      * Endpoint para deletar um Anime pelo ID.
