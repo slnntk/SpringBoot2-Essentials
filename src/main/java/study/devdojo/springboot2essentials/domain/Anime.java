@@ -1,11 +1,13 @@
 package study.devdojo.springboot2essentials.domain;
 
 import lombok.*;
+import org.hibernate.validator.constraints.URL;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.NotEmpty;
 
 /**
  * Representa a entidade Anime, identificada como uma entidade no contexto do banco de dados.
