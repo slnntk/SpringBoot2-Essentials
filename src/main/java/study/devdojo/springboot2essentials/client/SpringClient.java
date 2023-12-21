@@ -115,6 +115,8 @@ public class SpringClient {
         HttpHeaders headers = createJsonHeader();
         HttpEntity<Anime> request = new HttpEntity<>(anime, headers);
 
-        return new RestTemplate().exchange(url, HttpMethod.POST, request, Anime.class);
+        return new RestTemplate().exchange(url,
+                HttpMethod.POST, request,
+                Anime.class);
     }
 }
