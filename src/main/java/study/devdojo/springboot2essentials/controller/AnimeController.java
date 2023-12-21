@@ -40,6 +40,19 @@ public class AnimeController {
         return ResponseEntity.ok(animeService.listAll(pageable));
     }
 
+    /**
+     * Método GET para recuperar todos os Animes sem aplicar paginação.
+     * Retorna um ResponseEntity contendo a lista completa de Animes presentes no sistema.
+     * Ao chamar o método listAllNonPageable() do AnimeService, busca-se todos os Animes sem a restrição de paginação,
+     * retornando-os dentro de um ResponseEntity com status HTTP OK (200).
+     *
+     * @return ResponseEntity<List < Anime>> contendo a lista completa de Animes e o status HTTP OK (200).
+     */
+    @GetMapping(path = "/all")
+    public ResponseEntity<List<Anime>> listAll() {
+        return ResponseEntity.ok(animeService.listAllNonPageable());
+    }
+
 
     /**
      * Endpoint para buscar um Anime pelo ID.
