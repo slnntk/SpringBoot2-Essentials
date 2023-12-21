@@ -51,11 +51,7 @@ public class AnimeService {
      */
     @Transactional
     public Anime save(AnimePostRequestBody animePostRequestBody) {
-        // Mapeia os dados do corpo da requisição (AnimePostRequestBody) para um objeto do tipo Anime.
-        Anime anime = AnimeMapper.INSTANCE.toAnime(animePostRequestBody);
-
-        // Salva o Anime no banco de dados utilizando o AnimeRepository.
-        return animeRepository.save(anime);
+        return animeRepository.save(AnimeMapper.INSTANCE.toAnime(animePostRequestBody));
     }
 
     public void delete(long id) {

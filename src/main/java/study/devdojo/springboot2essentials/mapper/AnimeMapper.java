@@ -1,6 +1,7 @@
 package study.devdojo.springboot2essentials.mapper;
 
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.factory.Mappers;
 import study.devdojo.springboot2essentials.domain.Anime;
 import study.devdojo.springboot2essentials.requests.AnimePostRequestBody;
@@ -23,6 +24,7 @@ public abstract class AnimeMapper {
      * @param animePostRequestBody Objeto de requisição para criação de Anime.
      * @return Objeto Anime mapeado a partir do AnimePostRequestBody.
      */
+
     public abstract Anime toAnime(AnimePostRequestBody animePostRequestBody);
 
     /**
