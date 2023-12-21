@@ -23,13 +23,8 @@ public class DeveloperWebMvcConfigurer implements WebMvcConfigurer {
      */
     @Override
     public void addArgumentResolvers(List<HandlerMethodArgumentResolver> resolvers) {
-        // Cria um PageableHandlerMethodArgumentResolver para lidar com a resolução de objetos Pageable.
         PageableHandlerMethodArgumentResolver pageableHandler =  new PageableHandlerMethodArgumentResolver();
-
-        // Define uma página padrão de fallback (0, 5) caso não haja parâmetros de paginação na solicitação.
         pageableHandler.setFallbackPageable(PageRequest.of(0, 5));
-
-        // Adiciona o PageableHandlerMethodArgumentResolver à lista de argument resolvers.
         resolvers.add(pageableHandler);
     }
 }

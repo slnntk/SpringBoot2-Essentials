@@ -12,4 +12,13 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
-    show-sql: true
+
+logging:
+  level:
+    org:
+      hibernate:
+        sql: debug
+        type:
+          descriptor:
+            sql:
+              BasicBinder: trace
