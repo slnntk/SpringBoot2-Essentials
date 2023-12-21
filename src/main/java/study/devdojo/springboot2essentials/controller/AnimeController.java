@@ -29,15 +29,17 @@ public class AnimeController {
     private final AnimeService animeService; // Serviço responsável pela lógica de negócio dos Animes.
 
     /**
-     * Endpoint para listar todos os Animes.
+     * Endpoint para listar os Animes com paginação.
+     * Utiliza o parâmetro 'pageable' para permitir a paginação dos resultados.
      *
-     * @return ResponseEntity contendo a lista de Animes e o código de status HTTP OK.
-     * (200 - OK)
+     * @param pageable Objeto que encapsula informações de paginação como número da página, tamanho da página, etc.
+     * @return ResponseEntity contendo a página de Animes e o código de status HTTP OK (200 - OK).
      */
     @GetMapping
     public ResponseEntity<Page<Anime>> list(Pageable pageable) {
         return ResponseEntity.ok(animeService.listAll(pageable));
     }
+
 
     /**
      * Endpoint para buscar um Anime pelo ID.
