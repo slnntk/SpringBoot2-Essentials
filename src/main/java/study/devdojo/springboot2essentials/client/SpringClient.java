@@ -48,6 +48,14 @@ public class SpringClient {
         Anime newAnime = Anime.builder().name("Samurai Champloo").build();
         ResponseEntity<Anime> savedAnimeResponse = addNewAnime(newAnime);
         log.info("Saved Anime: {}", savedAnimeResponse);
+
+        Anime updatedAnime = Anime.builder().id(2L).name("New Name").build();
+        ResponseEntity<Void> updateResponse = updateAnime(updatedAnime);
+        log.info("Update Response: " + updateResponse);
+
+        // Chamada para excluir um Anime pelo ID
+        ResponseEntity<Void> deleteResponse = deleteAnime(2L);
+        log.info("Delete Response: " + deleteResponse);
     }
 
     private static HttpHeaders createJsonHeader() {
@@ -119,4 +127,38 @@ public class SpringClient {
                 HttpMethod.POST, request,
                 Anime.class);
     }
+
+    /**
+     * Atualiza um Anime existente na API.
+     *
+     * @param anime Objeto Anime com os dados atualizados.
+     * @return ResponseEntity indicando o resultado da atualização.
+     */
+    private static ResponseEntity<Void> updateAnime(Anime anime) {
+        String url = BASE_URL + "/{id}";
+        HttpHeaders headers = createJsonHeader();
+        HttpEntity<Anime> request = new HttpEntity<>(anime, headers);
+
+        return new RestTemplate().exchange(url,
+                HttpMethod.PUT,
+                request,
+                Void.class,
+                anime.getId());
+    }
+
+    /**
+     * Exclui um Anime da API pelo ID.
+     *
+     * @param id ID do Anime a ser excluído.
+     * @return ResponseEntity indicando o resultado da exclusão.
+     */
+    private static ResponseEntity<Void> deleteAnime(Long id) {
+        String url = BASE_URL + "/{id}";
+        return new RestTemplate().exchange(url,
+                HttpMethod.DELETE,
+                null,
+                Void.class,
+                id);
+    }
+
 }
