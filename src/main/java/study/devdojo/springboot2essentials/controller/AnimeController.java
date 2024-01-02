@@ -59,7 +59,6 @@ public class AnimeController {
      *
      * @param id ID do Anime a ser buscado.
      * @return ResponseEntity contendo o Anime encontrado e o código de status HTTP OK.
-     * (200 - OK)
      */
     @GetMapping(path = "/{id}")
     public ResponseEntity<Anime> findById(@PathVariable long id) {
