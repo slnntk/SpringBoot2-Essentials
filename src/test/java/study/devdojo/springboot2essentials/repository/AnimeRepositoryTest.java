@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import study.devdojo.springboot2essentials.domain.Anime;
 
+import javax.validation.ConstraintViolationException;
 import java.util.List;
 import java.util.Optional;
 
@@ -56,8 +57,7 @@ class AnimeRepositoryTest {
 
         Optional<Anime> animeOptional = this.animeRepository.findById(animeSaved.getId());
 
-        Assertions.assertThat(animeOptional)
-                .isEmpty();
+        Assertions.assertThat(animeOptional).isEmpty();
     }
 
     @Test
@@ -69,9 +69,7 @@ class AnimeRepositoryTest {
         String name = animeSaved.getName();
         List<Anime> animesList = this.animeRepository.findByName(name);
 
-        Assertions.assertThat(animesList)
-                .isNotEmpty()
-                .contains(animeSaved);
+        Assertions.assertThat(animesList).isNotEmpty().contains(animeSaved);
     }
 
     @Test
@@ -82,10 +80,20 @@ class AnimeRepositoryTest {
         Assertions.assertThat(animesList).isEmpty();
     }
 
+    @Test
+    @DisplayName("Save throw ConstraintViolationException when name is empty")
+    void save_ThrowsConstraintViolationException_WhenNameIsEmpty() {
+        Anime anime = new Anime();
+//        Assertions.assertThatThrownBy(() -> this.animeRepository.save(anime))
+//                .isInstanceOf(ConstraintViolationException.class);
+
+        Assertions.assertThatExceptionOfType(ConstraintViolationException.class)
+                .isThrownBy(() -> this.animeRepository.save(anime))
+                .withMessageContaining("The anime name cannot be empty");
+    }
+
     private Anime createAnime() {
-        return Anime.builder()
-                .name("Sousou no Frieren")
-                .build();
+        return Anime.builder().name("Sousou no Frieren").build();
     }
 
 }
