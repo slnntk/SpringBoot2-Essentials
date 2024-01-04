@@ -23,6 +23,6 @@ public class Anime {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id; // Identificador único do Anime no banco de dados.
 
-    @NotEmpty(message = "The anime name cannot be empty")
-    private String name; // Nome do Anime.
+    @NotEmpty(message = "The anime name cannot be empty")// Nome do Anime.
+    private String name;
 }
