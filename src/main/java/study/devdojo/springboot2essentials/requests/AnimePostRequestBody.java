@@ -1,5 +1,6 @@
 package study.devdojo.springboot2essentials.requests;
 
+import lombok.Builder;
 import lombok.Data;
 import org.hibernate.validator.constraints.URL;
 
@@ -13,6 +14,7 @@ import javax.validation.constraints.NotEmpty;
  * getters, setters, toString, hashCode e equals baseados nos campos da classe.
  */
 @Data
+@Builder
 public class AnimePostRequestBody {
 
     /**
