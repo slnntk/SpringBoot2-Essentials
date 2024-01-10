@@ -144,6 +144,7 @@ class AnimeServiceTest {
         Assertions.assertThat(animes.get(0).getName()).isEqualTo(expectedName);
     }
 
+
     @Test
     @DisplayName("findByName returns an empty list of anime when anime is not found")
     void findByName_ReturnsEmptyListOfAnime_WhenAnimeIsNotFound(){
@@ -157,6 +158,7 @@ class AnimeServiceTest {
                 .isEmpty();
 
     }
+
 
     @Test
     @DisplayName("save returns anime when successful")

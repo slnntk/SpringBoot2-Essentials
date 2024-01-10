@@ -5,8 +5,8 @@ import study.devdojo.springboot2essentials.requests.AnimePutRequestBody;
 public class AnimePutRequestBodyCreator {
     public static AnimePutRequestBody createAnimePutRequestBody(){
         return AnimePutRequestBody.builder()
-                .id(AnimeCreator.createValidUpdateAnime().getId())
-                .name(AnimeCreator.createValidUpdateAnime().getName())
+                .id(AnimeCreator.createValidUpdatedAnime().getId())
+                .name(AnimeCreator.createValidUpdatedAnime().getName())
                 .build();
     }
 }

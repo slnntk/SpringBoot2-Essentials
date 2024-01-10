@@ -33,7 +33,7 @@ public class AnimeCreator {
      *
      * @return Um objeto Anime válido para atualização.
      */
-    public static Anime createValidUpdateAnime() {
+    public static Anime createValidUpdatedAnime() {
         return Anime.builder()
                 .name("HxH")
                 .id(1L)

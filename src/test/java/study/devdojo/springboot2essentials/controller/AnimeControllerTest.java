@@ -96,14 +96,15 @@ class AnimeControllerTest {
      * Teste para verificar se o método list() em AnimeController retorna uma lista de animes válidos.
      */
     @Test
-    @DisplayName("List returns list of animes inside page object when successful")
+    @DisplayName("list returns list of anime inside page object when successful")
     void list_ReturnsListOfAnimesInsidePageObject_WhenSuccessful() {
         String expectedName = AnimeCreator.createValidAnime().getName();
 
         Page<Anime> animePage = animeController.list(null).getBody();
 
-        Assertions.assertThat(animePage)
-                .isNotNull()
+        Assertions.assertThat(animePage).isNotNull();
+
+        Assertions.assertThat(animePage.toList())
                 .isNotEmpty()
                 .hasSize(1);
 
@@ -114,19 +115,18 @@ class AnimeControllerTest {
      * Teste para verificar se o método listAll() em AnimeController retorna uma lista de animes com sucesso.
      */
     @Test
-    @DisplayName("ListAll returns list of animes when successful")
+    @DisplayName("listAll returns list of anime when successful")
     void listAll_ReturnsListOfAnimes_WhenSuccessful() {
         String expectedName = AnimeCreator.createValidAnime().getName();
 
-        List<Anime> animeList = animeController.listAll().getBody();
+        List<Anime> animes = animeController.listAll().getBody();
 
-        Assertions.assertThat(animeList)
+        Assertions.assertThat(animes)
                 .isNotNull()
                 .isNotEmpty()
                 .hasSize(1);
 
-        Assertions.assertThat(animeList.get(0).getName())
-                .isEqualTo(expectedName);
+        Assertions.assertThat(animes.get(0).getName()).isEqualTo(expectedName);
     }
 
     /**
@@ -139,12 +139,9 @@ class AnimeControllerTest {
 
         Anime anime = animeController.findById(1).getBody();
 
-        Assertions.assertThat(anime)
-                .isNotNull();
+        Assertions.assertThat(anime).isNotNull();
 
-        Assertions.assertThat(anime.getId())
-                .isNotNull()
-                .isEqualTo(expectedId);
+        Assertions.assertThat(anime.getId()).isNotNull().isEqualTo(expectedId);
     }
 
     /**
@@ -153,18 +150,17 @@ class AnimeControllerTest {
      */
     @Test
     @DisplayName("findByName returns a list of anime when successful")
-    void findByName_ReturnsAnime_WhenSuccessful() {
+    void findByName_ReturnsListOfAnime_WhenSuccessful() {
         String expectedName = AnimeCreator.createValidAnime().getName();
 
-        List<Anime> animeList = animeController.findByName("anime").getBody();
+        List<Anime> animes = animeController.findByName("anime").getBody();
 
-        Assertions.assertThat(animeList)
+        Assertions.assertThat(animes)
                 .isNotNull()
                 .isNotEmpty()
                 .hasSize(1);
 
-        Assertions.assertThat(animeList.get(0).getName())
-                .isEqualTo(expectedName);
+        Assertions.assertThat(animes.get(0).getName()).isEqualTo(expectedName);
     }
 
     /**
@@ -173,7 +169,7 @@ class AnimeControllerTest {
      */
     @Test
     @DisplayName("findByName returns an empty list of anime when anime is not found")
-    void findByName_ReturnsEmptyListOfAnime_WhenAnimeIsNotFound(){
+    void findByName_ReturnsEmptyListOfAnime_WhenAnimeIsNotFound() {
         BDDMockito.when(animeServiceMock.findByName(ArgumentMatchers.anyString()))
                 .thenReturn(Collections.emptyList());
 
@@ -182,6 +178,7 @@ class AnimeControllerTest {
         Assertions.assertThat(animes)
                 .isNotNull()
                 .isEmpty();
+
     }
 
     /**
@@ -189,12 +186,12 @@ class AnimeControllerTest {
      */
     @Test
     @DisplayName("save returns anime when successful")
-    void save_ReturnsAnime_WhenSuccessful(){
+    void save_ReturnsAnime_WhenSuccessful() {
+
         Anime anime = animeController.save(AnimePostRequestBodyCreator.createAnimePostRequestBody()).getBody();
 
-        Assertions.assertThat(anime)
-                .isNotNull()
-                .isEqualTo(AnimeCreator.createValidAnime());
+        Assertions.assertThat(anime).isNotNull().isEqualTo(AnimeCreator.createValidAnime());
+
     }
 
     /**
@@ -202,16 +199,16 @@ class AnimeControllerTest {
      */
     @Test
     @DisplayName("replace updates anime when successful")
-    void replace_UpdatesAnime_WhenSuccessful(){
+    void replace_UpdatesAnime_WhenSuccessful() {
+
         Assertions.assertThatCode(() -> animeController.replace(AnimePutRequestBodyCreator.createAnimePutRequestBody()))
                 .doesNotThrowAnyException();
 
         ResponseEntity<Void> entity = animeController.replace(AnimePutRequestBodyCreator.createAnimePutRequestBody());
 
-        Assertions.assertThat(entity)
-                .isNotNull();
-        Assertions.assertThat(entity.getStatusCode())
-                .isEqualTo(HttpStatus.NO_CONTENT);
+        Assertions.assertThat(entity).isNotNull();
+
+        Assertions.assertThat(entity.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
     }
 
     /**
@@ -219,16 +216,16 @@ class AnimeControllerTest {
      */
     @Test
     @DisplayName("delete removes anime when successful")
-    void delete_RemovesAnime_WhenSuccessful(){
+    void delete_RemovesAnime_WhenSuccessful() {
+
         Assertions.assertThatCode(() -> animeController.delete(1))
                 .doesNotThrowAnyException();
 
         ResponseEntity<Void> entity = animeController.delete(1);
 
-        Assertions.assertThat(entity)
-                .isNotNull();
-        Assertions.assertThat(entity.getStatusCode())
-                .isEqualTo(HttpStatus.NO_CONTENT);
+        Assertions.assertThat(entity).isNotNull();
+
+        Assertions.assertThat(entity.getStatusCode()).isEqualTo(HttpStatus.NO_CONTENT);
     }
 
 }
