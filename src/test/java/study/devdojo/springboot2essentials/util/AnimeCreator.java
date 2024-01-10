@@ -9,9 +9,10 @@ public class AnimeCreator {
      *
      * @return Um objeto Anime a ser salvo.
      */
-    public static Anime createAnimeToBeSaved() {
+    public static Anime createAnimeToBeSaved(){
+        System.out.println("createAnimeToBeSaved");
         return Anime.builder()
-                .name("Sousou no Frieren")
+                .name("Hajime no Ippo")
                 .build();
     }
 
@@ -20,9 +21,10 @@ public class AnimeCreator {
      *
      * @return Um objeto Anime válido.
      */
-    public static Anime createValidAnime() {
+    public static Anime createValidAnime(){
+        System.out.println("createValidAnime");
         return Anime.builder()
-                .name("One Piece")
+                .name("Hajime no Ippo")
                 .id(1L)
                 .build();
     }
@@ -33,9 +35,10 @@ public class AnimeCreator {
      *
      * @return Um objeto Anime válido para atualização.
      */
-    public static Anime createValidUpdatedAnime() {
+    public static Anime createValidUpdatedAnime(){
+        System.out.println("createValidUpdatedAnime");
         return Anime.builder()
-                .name("HxH")
+                .name("Hajime no Ippo 2")
                 .id(1L)
                 .build();
     }
